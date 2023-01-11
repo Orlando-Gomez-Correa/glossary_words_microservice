@@ -2,12 +2,11 @@ defmodule Glossary.Words do
   @moduledoc """
   The Words context.
   """
-
-  import Ecto.Query, warn: false
-  import Glossary.Guards
   alias Glossary.Repo
+  import Ecto.Query, warn: false
 
   alias Glossary.Words.{Category, Word}
+  import Glossary.Guards
 
   @doc """
   Returns the list of categories.
@@ -19,8 +18,9 @@ defmodule Glossary.Words do
 
   """
   def list_categories do
-    Repo.all(Category)
-    |> Repo.preload(:words)
+    q2 = from c in Category, preload: :words
+
+    Repo.all(q2)
   end
 
   @doc """
@@ -227,5 +227,89 @@ defmodule Glossary.Words do
 
   def change_word_image(%Word{} = word) do
     Word.avatar_changeset(word, %{})
+  end
+
+  # Pagination
+
+  # def list_categories do
+  #   Repo.all(Category)
+  #   |> Repo.preload(:words)
+  # end
+
+  # def list_categories do
+  # q2 = from c in Category, preload: :words
+
+  # Repo.all(q2)
+  # end
+
+  def list_categories_with_pagination(:paged, page, per_page) do
+    Category
+    |> order_by(asc: :name)
+    |> Glossary.Words.page(page, per_page)
+  end
+
+  def base_query do
+    Repo.all(from c in Category, preload: :words)
+  end
+
+  def query(query, page, per_page) when is_nil(page) do
+    query(query, 0, per_page)
+  end
+
+  def query(query, page, per_page) when is_nil(per_page) do
+    query(query, page, 0)
+  end
+
+  def query(query, page, per_page) when is_binary(page) do
+    query(query, String.to_integer(page), per_page)
+  end
+
+  def query(query, page, per_page) when is_binary(per_page) do
+    query(query, page, String.to_integer(per_page))
+  end
+
+  def query(query, page, per_page) do
+    query
+    |> limit(^(per_page + 0))
+    |> offset(^(per_page * (page - 1)))
+    |> Repo.all()
+  end
+
+  def page(query, page, per_page) when is_binary(page) do
+    page(query, String.to_integer(page), per_page)
+  end
+
+  def page(query, page, per_page) when is_binary(per_page) do
+    page(query, page, String.to_integer(per_page))
+  end
+
+  def page(query, page, per_page) do
+    results = query(query, page, per_page)
+    has_next = length(results) > per_page
+    has_prev = page > 1
+    total_count = Repo.one(from(t in subquery(query), select: count("*")))
+
+    %{
+      has_next: has_next,
+      has_prev: has_prev,
+      prev_page: page - 1,
+      page: page,
+      next_page: page + 1,
+      first: (page - 1) * per_page + 1,
+      last: Enum.min([page * per_page, total_count]),
+      total_count: total_count,
+      list: Enum.slice(results, 0, per_page) |> Repo.preload(:words)
+    }
+  end
+
+  # SEARCH
+  def list_search_categories(:paged, page, per_page, term) do
+    search_term = "%#{term}%"
+
+    Category
+    |> where([c], ilike(c.name, ^search_term))
+    |> or_where([c], ilike(c.code, ^search_term))
+    |> order_by(asc: :name)
+    |> __MODULE__.page(page, per_page)
   end
 end

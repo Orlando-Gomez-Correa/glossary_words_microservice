@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Workspace
+    command: /bin/sh run.sh
+    ports: 
+      - "4002:4000"
+    environment:
+      GUARDIAN_ISSUER: https://orlando-greenhouse.us.auth0.com/
+      GUARDIAN_SECRET_KEY: gwCCrajJpvsCgrxQWkPD92boIVthyYEq
+    depends_on: 
+      - database
+    links:
+      - database
+
+  database:
+    image: "postgres:14"
+    expose:
+      - "5433"
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5433:5432"

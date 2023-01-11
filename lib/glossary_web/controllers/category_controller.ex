@@ -6,9 +6,28 @@ defmodule GlossaryWeb.CategoryController do
 
   action_fallback GlossaryWeb.FallbackController
 
-  def index(conn, _params) do
-    categories = Words.list_categories()
-    render(conn, "index.json", categories: categories)
+  # def index(conn, _params) do
+  #   categories = Words.list_categories()
+  #   render(conn, "index.json", categories: categories)
+  # end
+
+  def index(conn, params) do
+    page = params["page"] || 1
+    page_size = params["page_size"] || 1
+
+    categories = Words.list_categories_with_pagination(:paged, page, page_size)
+
+    case categories != [] do
+      true ->
+        conn
+        |> put_status(:ok)
+        |> render("index.json", categories: categories)
+
+      false ->
+        conn
+        |> put_status(200)
+        |> json(%{error: "There are no categories"})
+    end
   end
 
   def create(conn, category_params) do
@@ -43,5 +62,24 @@ defmodule GlossaryWeb.CategoryController do
   def showTest(conn, %{"id" => id}) do
     category = Words.get_category!(id)
     render(conn, "show.json", category: category)
+  end
+
+  def search_category(conn, params) do
+    page = params["page"] || 1
+    page_size = params["page_size"] || 1
+    term = params["name"]
+    categories = Words.list_search_categories(:paged, page, page_size, term)
+
+    case categories != [] do
+      true ->
+        conn
+        |> put_status(:ok)
+        |> render("index.json", categories: categories)
+
+      false ->
+        conn
+        |> put_status(200)
+        |> json(%{error: "There are no categories"})
+    end
   end
 end

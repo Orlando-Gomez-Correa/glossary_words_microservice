@@ -9,6 +9,7 @@ defmodule GlossaryWeb.Router do
     pipe_through :api
 
     get "/categoriesTest/:id", CategoryController, :showTest
+    get "/search", CategoryController, :search_category
 
     resources "/categories", CategoryController, except: [:new, :edit] do
       get "/words", WordController, :index
