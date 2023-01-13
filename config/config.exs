@@ -45,3 +45,14 @@ import_config "#{config_env()}.exs"
 # Configures Waffle
 config :waffle,
   storage: Waffle.Storage.Local
+
+# Configures Swagger
+config :glossary, :phoenix_swagger,
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      router: GlossaryWeb.Router,
+      endpoint: GlossaryWeb.Endpoint
+    ]
+  }
+
+config :phoenix_swagger, json_library: Jason

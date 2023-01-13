@@ -1,0 +1,1224 @@
+{
+  "definitions": {
+    "Category": {
+      "description": "A category of the application",
+      "properties": {
+        "code": {
+          "description": "Category code",
+          "type": "string"
+        },
+        "description": {
+          "description": "Category description",
+          "type": "text"
+        },
+        "id": {
+          "description": "Category ID",
+          "type": "string"
+        },
+        "inserted_at": {
+          "description": "When was the activity initially inserted",
+          "format": "datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "Category name",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "When was the activity last updated",
+          "format": "datetime",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "description",
+        "name"
+      ],
+      "title": "Category",
+      "type": "object"
+    },
+    "CreateCategoryRequest": {
+      "description": "POST body for creating a category",
+      "example": {
+        "code": "AR900",
+        "description": "ISO 9000 is a set of quality control and quality management standards established by the International Organization for Standardization. They can be applied in any type of organization or activity oriented to the production of goods or services.",
+        "name": "ISO 9000"
+      },
+      "properties": {
+        "category": {
+          "$ref": "#/definitions/Category",
+          "description": "The category details"
+        }
+      },
+      "title": "CreateCategoryRequest",
+      "type": "object"
+    },
+    "CreateCategoryResponse": {
+      "description": "Response schema for single category",
+      "example": {
+        "data": {
+          "code": "AR900",
+          "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+          "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+          "name": "Operation",
+          "words": []
+        }
+      },
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Category",
+          "description": "The category details created"
+        }
+      },
+      "title": "CreateCategoryResponse",
+      "type": "object"
+    },
+    "CreateCategoryResponseErrors": {
+      "description": "Response errors from create category",
+      "example": {
+        "code": "can't be blank",
+        "description": "can't be blank",
+        "name": "can't be blank"
+      },
+      "title": "CreateCategoryResponseErrors",
+      "type": "object"
+    },
+    "CreateWordRequest": {
+      "description": "POST body for creating a word",
+      "example": {
+        "word": {
+          "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+          "name": "Operation"
+        }
+      },
+      "properties": {
+        "word": {
+          "$ref": "#/definitions/Word",
+          "description": "The word details"
+        }
+      },
+      "title": "CreateWordRequest",
+      "type": "object"
+    },
+    "CreateWordResponse": {
+      "description": "Response schema for single word",
+      "example": {
+        "data": {
+          "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+          "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+          "image": {
+            "file_name": "operation.png",
+            "updated_at": "2022-12-16T15:55:28"
+          },
+          "name": "Operation"
+        }
+      },
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Word",
+          "description": "The word details created"
+        }
+      },
+      "title": "CreateWordResponse",
+      "type": "object"
+    },
+    "CreateWordResponseErrors": {
+      "description": "Response errors from create word",
+      "example": {
+        "description": "can't be blank",
+        "name": "can't be blank"
+      },
+      "title": "CreateWordResponseErrors",
+      "type": "object"
+    },
+    "DeleteCategoryRequest": {
+      "description": "Request params to delete a category",
+      "title": "DeleteCategoryRequest",
+      "type": "object"
+    },
+    "DeleteCategoryResponse": {
+      "description": "Response schema of a single category",
+      "example": {
+        "data": {
+          "code": "AR900",
+          "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+          "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+          "name": "Operation",
+          "words": [
+            {
+              "category_id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+              "description": "For the ISO-9000 standard, quality is the degree to which a set of inherent characteristics meets the requirements, being: Quality characteristic: inherent characteristic of a product, process or system related to a requirement.",
+              "id": "df48a064-75d5-4be7-a773-7003169277e6",
+              "image": {
+                "file_name": "quality.png",
+                "updated_at": "2022-12-16T15:55:28"
+              },
+              "name": "Quality"
+            }
+          ]
+        }
+      },
+      "properties": {
+        "data": {
+          "description": "The category deleted",
+          "items": {
+            "$ref": "#/definitions/Category"
+          },
+          "type": "array"
+        }
+      },
+      "title": "DeleteCategoryResponse",
+      "type": "object"
+    },
+    "DeleteWordRequest": {
+      "description": "Request params to delete a word",
+      "title": "DeleteWordRequest",
+      "type": "object"
+    },
+    "DeleteWordResponse": {
+      "description": "Response schema of a single word",
+      "example": {
+        "data": {
+          "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+          "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+          "image": {
+            "file_name": "operation.png",
+            "updated_at": "2022-12-16T15:55:28"
+          },
+          "name": "Authority to dispose of"
+        }
+      },
+      "properties": {
+        "data": {
+          "description": "The word deleted",
+          "items": {
+            "$ref": "#/definitions/Word"
+          },
+          "type": "array"
+        }
+      },
+      "title": "DeleteWordResponse",
+      "type": "object"
+    },
+    "Error": {
+      "description": "Error responses from the API",
+      "properties": {
+        "error": {
+          "description": "The message of the error raised",
+          "type": "string"
+        }
+      },
+      "required": [
+        "error"
+      ],
+      "title": "Errors",
+      "type": "object"
+    },
+    "ShowCategoriesEmptyResponse": {
+      "description": "Response error categories empty",
+      "example": {
+        "error": "There are no categories"
+      },
+      "title": "ShowCategoriesEmptyResponse",
+      "type": "object"
+    },
+    "ShowCategoriesResponse": {
+      "description": "Response schema for multiple categories created",
+      "example": {
+        "categories": [
+          {
+            "code": "AR900",
+            "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+            "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+            "name": "Operation",
+            "words": [
+              {
+                "category_id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+                "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+                "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+                "image": {
+                  "file_name": "operation.png",
+                  "updated_at": "2022-12-16T15:55:28"
+                },
+                "name": "Operation"
+              },
+              {
+                "category_id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+                "description": "For the ISO-9000 standard, quality is the degree to which a set of inherent characteristics meets the requirements, being: Quality characteristic: inherent characteristic of a product, process or system related to a requirement.",
+                "id": "df48a064-75d5-4be7-a773-7003169277e6",
+                "image": {
+                  "file_name": "quality.png",
+                  "updated_at": "2022-12-16T15:55:28"
+                },
+                "name": "Quality"
+              }
+            ]
+          },
+          {
+            "category_id": "5a10f256-51cd-4e91-844f-13d17a65ad57",
+            "description": "For the ISO-9000 standard, quality is the degree to which a set of inherent characteristics meets the requirements, being: Quality characteristic: inherent characteristic of a product, process or system related to a requirement.",
+            "id": "df48a064-75d5-4be7-a773-7003169277e6",
+            "image": {
+              "file_name": "quality.png",
+              "updated_at": "2022-12-16T15:55:28"
+            },
+            "name": "Quality"
+          }
+        ],
+        "first": 1,
+        "has_next": false,
+        "has_prev": false,
+        "last": 2,
+        "next_page": 2,
+        "page": 1,
+        "prev_page": 0,
+        "total_count": 2
+      },
+      "properties": {
+        "categories": {
+          "description": "The categories details",
+          "items": {
+            "$ref": "#/definitions/Category"
+          },
+          "type": "array"
+        }
+      },
+      "title": "ShowCategoriesResponse",
+      "type": "object"
+    },
+    "ShowCategoryResponse": {
+      "description": "Response schema of a single category",
+      "example": {
+        "data": {
+          "category_id": "5a10f256-51cd-4e91-844f-13d17a65ad57",
+          "description": "For the ISO-9000 standard, quality is the degree to which a set of inherent characteristics meets the requirements, being: Quality characteristic: inherent characteristic of a product, process or system related to a requirement.",
+          "id": "df48a064-75d5-4be7-a773-7003169277e6",
+          "image": {
+            "file_name": "quality.png",
+            "updated_at": "2022-12-16T15:55:28"
+          },
+          "name": "Quality"
+        }
+      },
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Category",
+          "description": "The category found"
+        }
+      },
+      "title": "ShowCategoryResponse",
+      "type": "object"
+    },
+    "ShowWordResponse": {
+      "description": "Response schema of a single word",
+      "example": {
+        "data": {
+          "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+          "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+          "image": {
+            "file_name": "operation.png",
+            "updated_at": "2022-12-16T15:55:28"
+          },
+          "name": "Operation"
+        }
+      },
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Word",
+          "description": "The word found"
+        }
+      },
+      "title": "ShowWordResponse",
+      "type": "object"
+    },
+    "ShowWordsEmptyResponse": {
+      "description": "Response error words empty",
+      "example": {
+        "error": "There are no words"
+      },
+      "title": "ShowWordsEmptyResponse",
+      "type": "object"
+    },
+    "ShowWordsResponse": {
+      "description": "Response schema for multiple words created",
+      "example": {
+        "first": 1,
+        "has_next": false,
+        "has_prev": false,
+        "last": 2,
+        "next_page": 2,
+        "page": 1,
+        "prev_page": 0,
+        "total_count": 2,
+        "words": [
+          {
+            "category_id": "5a10f256-51cd-4e91-844f-13d17a65ad57",
+            "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+            "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+            "image": {
+              "file_name": "operation.png",
+              "updated_at": "2022-12-16T15:55:28"
+            },
+            "name": "Operation"
+          },
+          {
+            "category_id": "5a10f256-51cd-4e91-844f-13d17a65ad57",
+            "description": "For the ISO-9000 standard, quality is the degree to which a set of inherent characteristics meets the requirements, being: Quality characteristic: inherent characteristic of a product, process or system related to a requirement.",
+            "id": "df48a064-75d5-4be7-a773-7003169277e6",
+            "image": {
+              "file_name": "quality.png",
+              "updated_at": "2022-12-16T15:55:28"
+            },
+            "name": "Quality"
+          }
+        ]
+      },
+      "properties": {
+        "words": {
+          "description": "The words details",
+          "items": {
+            "$ref": "#/definitions/Word"
+          },
+          "type": "array"
+        }
+      },
+      "title": "ShowWordsResponse",
+      "type": "object"
+    },
+    "UpdateCategoryRequest": {
+      "description": "Request params to update a category",
+      "example": {
+        "name": "ISO 26000"
+      },
+      "properties": {
+        "data": {
+          "description": "The category params",
+          "items": {
+            "$ref": "#/definitions/Word"
+          },
+          "type": "array"
+        }
+      },
+      "title": "UpdateCategoryRequest",
+      "type": "object"
+    },
+    "UpdateCategoryResponse": {
+      "description": "Response schema of a single category",
+      "example": {
+        "data": {
+          "code": "AR900",
+          "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+          "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+          "name": "Operation",
+          "words": [
+            {
+              "category_id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+              "description": "For the ISO-9000 standard, quality is the degree to which a set of inherent characteristics meets the requirements, being: Quality characteristic: inherent characteristic of a product, process or system related to a requirement.",
+              "id": "df48a064-75d5-4be7-a773-7003169277e6",
+              "image": {
+                "file_name": "quality.png",
+                "updated_at": "2022-12-16T15:55:28"
+              },
+              "name": "Quality"
+            }
+          ]
+        }
+      },
+      "properties": {
+        "data": {
+          "description": "The category updated",
+          "items": {
+            "$ref": "#/definitions/Word"
+          },
+          "type": "array"
+        }
+      },
+      "title": "UpdateCategoryResponse",
+      "type": "object"
+    },
+    "UpdateImageWordRequest": {
+      "description": "Request params to update a word's image",
+      "example": {
+        "image": "operation.png"
+      },
+      "properties": {
+        "data": {
+          "description": "The words params",
+          "items": {
+            "$ref": "#/definitions/Word"
+          },
+          "type": "array"
+        }
+      },
+      "title": "UpdateImageWordRequest",
+      "type": "object"
+    },
+    "UpdateImageWordResponse": {
+      "description": "Response schema of a single word",
+      "example": {
+        "data": {
+          "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+          "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+          "image": {
+            "file_name": "operation.png",
+            "updated_at": "2022-12-16T15:55:28"
+          },
+          "name": "Authority to dispose of"
+        }
+      },
+      "properties": {
+        "data": {
+          "description": "The word updated",
+          "items": {
+            "$ref": "#/definitions/Word"
+          },
+          "type": "array"
+        }
+      },
+      "title": "UpdateImageWordResponse",
+      "type": "object"
+    },
+    "UpdateWordRequest": {
+      "description": "Request params to update a word",
+      "example": {
+        "name": "Authority to dispose of"
+      },
+      "properties": {
+        "data": {
+          "description": "The word params",
+          "items": {
+            "$ref": "#/definitions/Word"
+          },
+          "type": "array"
+        }
+      },
+      "title": "UpdateWordRequest",
+      "type": "object"
+    },
+    "UpdateWordResponse": {
+      "description": "Response schema of a single word",
+      "example": {
+        "data": {
+          "description": "The Operation in ISO 9001 2015 Clause 8 of the 2015 revision of the ISO 9001 standard seeks to improve the operational control of your organization's production processes. In short, it asks you to effectively define the criteria and processes for the products and services to be delivered to customers, as well as the documentation and resources to ensure that the products and services you offer are adequate.",
+          "id": "e9bd02f8-f81a-4e4b-b67c-86df37b4ff1a",
+          "image": {
+            "file_name": "operation.png",
+            "updated_at": "2022-12-16T15:55:28"
+          },
+          "name": "Authority to dispose of"
+        }
+      },
+      "properties": {
+        "data": {
+          "description": "The word updated",
+          "items": {
+            "$ref": "#/definitions/Word"
+          },
+          "type": "array"
+        }
+      },
+      "title": "UpdateWordResponse",
+      "type": "object"
+    },
+    "Word": {
+      "description": "A word of the application",
+      "properties": {
+        "category_id": {
+          "description": "ID of category to which the word belongs",
+          "type": "string"
+        },
+        "description": {
+          "description": "Word description",
+          "type": "text"
+        },
+        "id": {
+          "description": "Word ID",
+          "type": "string"
+        },
+        "image": {
+          "description": "Word image",
+          "type": "string"
+        },
+        "inserted_at": {
+          "description": "When was the activity initially inserted",
+          "format": "datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "Word name",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "When was the activity last updated",
+          "format": "datetime",
+          "type": "string"
+        }
+      },
+      "required": [
+        "category_id",
+        "description",
+        "name"
+      ],
+      "title": "Word",
+      "type": "object"
+    }
+  },
+  "host": "localhost:4000",
+  "info": {
+    "contact": {
+      "email": "orlando@cordage.io",
+      "name": "Orlando Gomez"
+    },
+    "description": "API Documentation for GreenHouse API v1",
+    "termsOfService": "Open for public",
+    "title": "Words GreenHouse API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v1/categories": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "deprecated": false,
+        "description": "Create a new category in the database",
+        "operationId": "GlossaryWeb.CategoryController.create",
+        "parameters": [
+          {
+            "description": "The category data",
+            "in": "body",
+            "name": "word",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateCategoryRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/CreateCategoryResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/CreateCategoryResponseErrors"
+            }
+          }
+        },
+        "summary": "Add a new category",
+        "tags": [
+          "Category"
+        ]
+      }
+    },
+    "/api/v1/categories/{category_id}/words": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "deprecated": false,
+        "description": "Create a new word in the database",
+        "operationId": "GlossaryWeb.WordController.create",
+        "parameters": [
+          {
+            "description": "The ID of the category",
+            "in": "path",
+            "name": "category_id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "The word data",
+            "in": "body",
+            "name": "word",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateWordRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/CreateWordResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/CreateWordResponseErrors"
+            }
+          }
+        },
+        "summary": "Add a new word",
+        "tags": [
+          "Word"
+        ]
+      }
+    },
+    "/api/v1/categories/{category_id}/words/image/{image}": {
+      "get": {
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Show the word's description picture",
+        "operationId": "GlossaryWeb.WordController.show_image",
+        "parameters": [
+          {
+            "description": "The ID of the category",
+            "in": "path",
+            "name": "category_id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "Word ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          }
+        ],
+        "produces": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "201": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/UpdateImageWordRequest"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "summary": "Show the image of a word",
+        "tags": [
+          "Word"
+        ]
+      }
+    },
+    "/api/v1/categories/{category_id}/words/search?page={page}&page_size={size}&name={name}": {
+      "get": {
+        "deprecated": false,
+        "description": "Returns JSON with all words matching listed in the database",
+        "operationId": "GlossaryWeb.WordController.search_word",
+        "parameters": [
+          {
+            "description": "Page number to be displayed",
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "type": "integer",
+            "x-example": 2
+          },
+          {
+            "description": "Total number of entries per page",
+            "in": "path",
+            "name": "size",
+            "required": true,
+            "type": "integer",
+            "x-example": 10
+          },
+          {
+            "description": "The field you want to find",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ShowWordsResponse"
+            }
+          },
+          "204": {
+            "description": "No users",
+            "schema": {
+              "$ref": "#/definitions/ShowWordsEmptyResponse"
+            }
+          }
+        },
+        "summary": "All Words in the search",
+        "tags": [
+          "Word"
+        ]
+      }
+    },
+    "/api/v1/categories/{category_id}/words/update/{id}": {
+      "delete": {
+        "description": "Delete a word by ID",
+        "operationId": "GlossaryWeb.WordController.delete",
+        "parameters": [
+          {
+            "description": "The ID of the category",
+            "in": "path",
+            "name": "category_id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "Word ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - Deleted Successfully"
+          }
+        },
+        "summary": "Delete a specific word",
+        "tags": [
+          "Word"
+        ]
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update all attributes of a word",
+        "operationId": "GlossaryWeb.WordController.update",
+        "parameters": [
+          {
+            "description": "The ID of the category",
+            "in": "path",
+            "name": "category_id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "Word ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "The word details to update",
+            "in": "body",
+            "name": "word",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateWordRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "205": {
+            "description": "Updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateWordResponse"
+            }
+          },
+          "400": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "summary": "Update a word",
+        "tags": [
+          "Word"
+        ]
+      }
+    },
+    "/api/v1/categories/{category_id}/words/upload_image/{id}": {
+      "put": {
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "description": "Update the word's description picture",
+        "operationId": "GlossaryWeb.WordController.upload_image",
+        "parameters": [
+          {
+            "description": "The ID of the category",
+            "in": "path",
+            "name": "category_id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "Word ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "Browse File",
+            "in": "file",
+            "name": "image",
+            "required": true,
+            "type": "formData"
+          }
+        ],
+        "produces": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "201": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/UpdateImageWordRequest"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "summary": "Upload image of a word",
+        "tags": [
+          "Word"
+        ]
+      }
+    },
+    "/api/v1/categories/{category_id}/words/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "Return JSON with an especific word",
+        "operationId": "GlossaryWeb.WordController.show",
+        "parameters": [
+          {
+            "description": "The ID of the category",
+            "in": "path",
+            "name": "category_id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "Word ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Word created OK",
+            "schema": {
+              "$ref": "#/definitions/ShowWordResponse"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "summary": "Show a Specific Word",
+        "tags": [
+          "Word"
+        ]
+      }
+    },
+    "/api/v1/categories/{category_id}/words?page={page}&page_size={size}": {
+      "get": {
+        "deprecated": false,
+        "description": "Return JSON with all words listed in the database",
+        "operationId": "GlossaryWeb.WordController.index",
+        "parameters": [
+          {
+            "description": "The ID of the category",
+            "in": "path",
+            "name": "category_id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "Page number to be displayed",
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "type": "integer",
+            "x-example": 2
+          },
+          {
+            "description": "Total number of entries per page",
+            "in": "path",
+            "name": "size",
+            "required": true,
+            "type": "integer",
+            "x-example": 10
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ShowWordsResponse"
+            }
+          },
+          "204": {
+            "description": "No words",
+            "schema": {
+              "$ref": "#/definitions/ShowWordsEmptyResponse"
+            }
+          }
+        },
+        "summary": "All Words",
+        "tags": [
+          "Word"
+        ]
+      }
+    },
+    "/api/v1/categories/{id}": {
+      "delete": {
+        "description": "Delete a category by ID",
+        "operationId": "GlossaryWeb.CategoryController.delete",
+        "parameters": [
+          {
+            "description": "The ID of the category",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - Deleted Successfully"
+          }
+        },
+        "summary": "Delete a specific category",
+        "tags": [
+          "Category"
+        ]
+      },
+      "get": {
+        "deprecated": false,
+        "description": "Return JSON with an especific category",
+        "operationId": "GlossaryWeb.CategoryController.show",
+        "parameters": [
+          {
+            "description": "Category ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Category created OK",
+            "schema": {
+              "$ref": "#/definitions/ShowCategoryResponse"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "summary": "Show a specific category",
+        "tags": [
+          "Category"
+        ]
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update all attributes of a category",
+        "operationId": "GlossaryWeb.CategoryController.update",
+        "parameters": [
+          {
+            "description": "Category ID",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-example": "1b1716bd-1875-44c4-8c4b-6f969fc5fdbd"
+          },
+          {
+            "description": "The category details to update",
+            "in": "body",
+            "name": "category",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateCategoryRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "205": {
+            "description": "Updated",
+            "schema": {
+              "$ref": "#/definitions/UpdateCategoryResponse"
+            }
+          },
+          "400": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "summary": "Update a category",
+        "tags": [
+          "Category"
+        ]
+      }
+    },
+    "/api/v1/categories?page={page}&page_size={size}": {
+      "get": {
+        "deprecated": false,
+        "description": "Return JSON with all categories listed in the database",
+        "operationId": "GlossaryWeb.CategoryController.index",
+        "parameters": [
+          {
+            "description": "Page number to be displayed",
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "type": "integer",
+            "x-example": 2
+          },
+          {
+            "description": "Total number of entries per page",
+            "in": "path",
+            "name": "size",
+            "required": true,
+            "type": "integer",
+            "x-example": 10
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ShowCategoriesResponse"
+            }
+          },
+          "204": {
+            "description": "No Categories",
+            "schema": {
+              "$ref": "#/definitions/ShowCategoriesEmptyResponse"
+            }
+          }
+        },
+        "summary": "All Categories",
+        "tags": [
+          "Category"
+        ]
+      }
+    },
+    "/api/v1/search": {
+      "get": {
+        "deprecated": false,
+        "description": "Returns JSON with all categories matching listed in the database",
+        "operationId": "GlossaryWeb.CategoryController.search_category",
+        "parameters": [
+          {
+            "description": "Page number to be displayed",
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "type": "integer",
+            "x-example": 2
+          },
+          {
+            "description": "Total number of entries per page",
+            "in": "path",
+            "name": "size",
+            "required": true,
+            "type": "integer",
+            "x-example": 10
+          },
+          {
+            "description": "The field you want to find",
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ShowCategoriesResponse"
+            }
+          },
+          "204": {
+            "description": "No users",
+            "schema": {
+              "$ref": "#/definitions/ShowCategoriesEmptyResponse"
+            }
+          }
+        },
+        "summary": "All categories in the search",
+        "tags": [
+          "Category"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0"
+}
