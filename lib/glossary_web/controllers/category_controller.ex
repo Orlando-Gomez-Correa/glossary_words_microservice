@@ -6,11 +6,6 @@ defmodule GlossaryWeb.CategoryController do
 
   action_fallback GlossaryWeb.FallbackController
 
-  # def index(conn, _params) do
-  #   categories = Words.list_categories()
-  #   render(conn, "index.json", categories: categories)
-  # end
-
   def index(conn, params) do
     page = params["page"] || 1
     page_size = params["page_size"] || 1

@@ -6,15 +6,24 @@ defmodule GlossaryWeb.WordController do
 
   action_fallback GlossaryWeb.FallbackController
 
-  # def index(conn, _params) do
-  #   words = Words.list_words()
-  #   render(conn, "index.json", words: words)
-  # end
+  def index(conn, params) do
+    page = params["page"] || 1
+    page_size = params["page_size"] || 1
+    category_id = params["category_id"]
 
-  def index(conn, %{"category_id" => category_id}) do
-    category = Words.get_category!(category_id)
+    words = Words.list_words_with_pagination(:paged, page, page_size, category_id)
 
-    render(conn, "index.json", words: category.words)
+    case words != [] do
+      true ->
+        conn
+        |> put_status(:ok)
+        |> render("index.json", words: words)
+
+      false ->
+        conn
+        |> put_status(200)
+        |> json(%{error: "There are no words"})
+    end
   end
 
   def create(conn, %{"category_id" => category_id, "word" => word_params}) do
@@ -68,5 +77,25 @@ defmodule GlossaryWeb.WordController do
     conn
     |> put_status(200)
     |> send_resp(:ok, file)
+  end
+
+  def search_word(conn, params) do
+    page = params["page"] || 1
+    page_size = params["page_size"] || 1
+    category_id = params["category_id"]
+    term = params["name"]
+    words = Words.list_search_words(:paged, page, page_size, category_id, term)
+
+    case words != [] do
+      true ->
+        conn
+        |> put_status(:ok)
+        |> render("index.json", words: words)
+
+      false ->
+        conn
+        |> put_status(200)
+        |> json(%{error: "There are no words"})
+    end
   end
 end

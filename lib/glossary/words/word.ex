@@ -21,7 +21,7 @@ defmodule Glossary.Words.Word do
   @doc false
   def changeset(word, attrs) do
     word
-    |> cast(attrs, [:category_id, :name, :description, :image])
+    |> cast(attrs, [:category_id, :name, :description])
     |> validate_required([:name, :description])
     |> assoc_constraint(:category)
   end

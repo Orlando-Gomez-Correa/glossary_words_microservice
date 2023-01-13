@@ -18,6 +18,7 @@ defmodule GlossaryWeb.Router do
       delete "/words/:id", WordController, :delete
       put "/words/upload_image/:id", WordController, :upload_image
       get "/words/image/:image", WordController, :show_image
+      get "/words/search", WordController, :search_word
     end
   end
 

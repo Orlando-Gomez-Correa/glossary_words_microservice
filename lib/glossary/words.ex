@@ -2,11 +2,11 @@ defmodule Glossary.Words do
   @moduledoc """
   The Words context.
   """
+
   alias Glossary.Repo
   import Ecto.Query, warn: false
 
   alias Glossary.Words.{Category, Word}
-  import Glossary.Guards
 
   @doc """
   Returns the list of categories.
@@ -43,12 +43,6 @@ defmodule Glossary.Words do
   def get_category!(id) do
     Category
     |> Repo.get!(id)
-    |> Repo.preload(:words)
-  end
-
-  def get_category(id) when is_uuid(id) do
-    Category
-    |> Repo.get(id)
     |> Repo.preload(:words)
   end
 
@@ -231,26 +225,19 @@ defmodule Glossary.Words do
 
   # Pagination
 
-  # def list_categories do
-  #   Repo.all(Category)
-  #   |> Repo.preload(:words)
-  # end
-
-  # def list_categories do
-  # q2 = from c in Category, preload: :words
-
-  # Repo.all(q2)
-  # end
-
   def list_categories_with_pagination(:paged, page, per_page) do
     Category
     |> order_by(asc: :name)
     |> Glossary.Words.page(page, per_page)
   end
 
-  def base_query do
-    Repo.all(from c in Category, preload: :words)
+  def list_words_with_pagination(:paged, page_word, per_page_word, category_id \\ nil) do
+    Word
+    |> order_by(asc: :name)
+    |> Glossary.Words.page_word(page_word, per_page_word, category_id)
   end
+
+  # PAGINATE TO CATEGORY
 
   def query(query, page, per_page) when is_nil(page) do
     query(query, 0, per_page)
@@ -302,6 +289,79 @@ defmodule Glossary.Words do
     }
   end
 
+  # PAGINATE TO WORD
+
+  def query_word(query_word, page_word, per_page_word, category_id) when is_nil(page_word) do
+    query_word(query_word, 0, per_page_word, category_id)
+  end
+
+  def query_word(query_word, page_word, per_page_word, category_id) when is_nil(per_page_word) do
+    query_word(query_word, page_word, 0, category_id)
+  end
+
+  # ---------------------------
+
+  def query_word(query_word, page_word, per_page_word, category_id) when is_binary(page_word) do
+    query_word(query_word, String.to_integer(page_word), per_page_word, category_id)
+  end
+
+  def query_word(query_word, page_word, per_page_word, category_id)
+      when is_binary(per_page_word) do
+    query_word(query_word, page_word, String.to_integer(per_page_word), category_id)
+  end
+
+  # -------------------------------
+
+  def query_word(query_word, page_word, per_page_word, category_id)
+      when not is_nil(category_id) do
+    query_word
+    |> where([word], word.category_id == ^category_id)
+    |> query_word(page_word, per_page_word, nil)
+  end
+
+  # -------------------------------
+
+  def query_word(query_word, page_word, per_page_word, nil) do
+    results =
+      query_word
+      |> limit(^(per_page_word + 0))
+      |> offset(^(per_page_word * (page_word - 1)))
+      |> Repo.all()
+
+    total_count = query_word |> Repo.aggregate(:count)
+    {results, total_count}
+  end
+
+  # --------------------------
+  def page_word(query_word, page_word, per_page_word, category_id) when is_binary(page_word) do
+    page_word(query_word, String.to_integer(page_word), per_page_word, category_id)
+  end
+
+  def page_word(query_word, page_word, per_page_word, category_id)
+      when is_binary(per_page_word) do
+    page_word(query_word, page_word, String.to_integer(per_page_word), category_id)
+  end
+
+  # ------------------------------------------
+
+  def page_word(query_word, page_word, per_page_word, category_id) do
+    {results, total_count} = query_word(query_word, page_word, per_page_word, category_id)
+    has_next = length(results) > per_page_word
+    has_prev = page_word > 1
+
+    %{
+      has_next: has_next,
+      has_prev: has_prev,
+      prev_page: page_word - 1,
+      page: page_word,
+      next_page: page_word + 1,
+      first: (page_word - 1) * per_page_word + 1,
+      last: Enum.min([page_word * per_page_word, total_count]),
+      total_count: total_count,
+      list: Enum.slice(results, 0, per_page_word)
+    }
+  end
+
   # SEARCH
   def list_search_categories(:paged, page, per_page, term) do
     search_term = "%#{term}%"
@@ -311,5 +371,14 @@ defmodule Glossary.Words do
     |> or_where([c], ilike(c.code, ^search_term))
     |> order_by(asc: :name)
     |> __MODULE__.page(page, per_page)
+  end
+
+  def list_search_words(:paged, page_word, per_page_word, category_id \\ nil, term) do
+    search_term = "%#{term}%"
+
+    Word
+    |> where([c], ilike(c.name, ^search_term))
+    |> order_by(asc: :name)
+    |> __MODULE__.page_word(page_word, per_page_word, category_id)
   end
 end
